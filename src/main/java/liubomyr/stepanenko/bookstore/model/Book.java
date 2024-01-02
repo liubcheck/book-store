@@ -22,7 +22,7 @@ public class Book {
     @NotNull
     private String author;
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     private String isbn;
     @NotNull
     private BigDecimal price;
