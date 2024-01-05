@@ -2,7 +2,6 @@ package liubomyr.stepanenko.bookstore.repository.impl;
 
 import java.util.List;
 import java.util.Optional;
-import liubomyr.stepanenko.bookstore.exception.EntityNotFoundException;
 import liubomyr.stepanenko.bookstore.model.Book;
 import liubomyr.stepanenko.bookstore.repository.BookRepository;
 import org.hibernate.Session;
