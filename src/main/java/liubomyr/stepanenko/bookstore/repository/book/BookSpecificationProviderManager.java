@@ -2,8 +2,8 @@ package liubomyr.stepanenko.bookstore.repository.book;
 
 import java.util.List;
 import liubomyr.stepanenko.bookstore.model.Book;
-import liubomyr.stepanenko.bookstore.repository.SpecificationProviderManager;
 import liubomyr.stepanenko.bookstore.repository.SpecificationProvider;
+import liubomyr.stepanenko.bookstore.repository.SpecificationProviderManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
