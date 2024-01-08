@@ -29,11 +29,12 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
                     .getSpecificationProvider("author")
                     .getSpecification(searchParametersDto.author()));
         }
-        if (searchParametersDto.price() != null
-                && searchParametersDto.price().compareTo(BigDecimal.ZERO) > 0) {
+        if (searchParametersDto.minPrice() != null
+                && searchParametersDto.minPrice().compareTo(BigDecimal.ZERO) >= 0) {
             specification = specification.and(specificationProviderManager
                     .getSpecificationProvider("price")
-                    .getSpecification(searchParametersDto.price()));
+                    .getSpecification(new BigDecimal[]{searchParametersDto.minPrice(),
+                            searchParametersDto.maxPrice()}));
         }
         return specification;
     }
