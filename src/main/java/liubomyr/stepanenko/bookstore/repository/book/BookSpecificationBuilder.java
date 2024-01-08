@@ -29,8 +29,7 @@ public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
                     .getSpecificationProvider("author")
                     .getSpecification(searchParametersDto.author()));
         }
-        if (searchParametersDto.minPrice() != null
-                && searchParametersDto.minPrice().compareTo(BigDecimal.ZERO) >= 0) {
+        if (searchParametersDto.minPrice() != null || searchParametersDto.maxPrice() != null) {
             specification = specification.and(specificationProviderManager
                     .getSpecificationProvider("price")
                     .getSpecification(new BigDecimal[]{searchParametersDto.minPrice(),
