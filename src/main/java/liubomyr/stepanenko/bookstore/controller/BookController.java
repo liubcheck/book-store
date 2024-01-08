@@ -2,6 +2,7 @@ package liubomyr.stepanenko.bookstore.controller;
 
 import java.util.List;
 import liubomyr.stepanenko.bookstore.dto.BookDto;
+import liubomyr.stepanenko.bookstore.dto.BookSearchParametersDto;
 import liubomyr.stepanenko.bookstore.dto.CreateBookRequestDto;
 import liubomyr.stepanenko.bookstore.service.BookService;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,6 +31,11 @@ public class BookController {
     @GetMapping
     public List<BookDto> getAll() {
         return bookService.findAll();
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
+        return bookService.search(searchParameters);
     }
 
     @GetMapping("/{id}")
