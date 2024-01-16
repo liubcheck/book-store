@@ -1,8 +1,8 @@
 package liubomyr.stepanenko.bookstore.mapper;
 
 import liubomyr.stepanenko.bookstore.config.MapperConfig;
-import liubomyr.stepanenko.bookstore.dto.BookDto;
-import liubomyr.stepanenko.bookstore.dto.CreateBookRequestDto;
+import liubomyr.stepanenko.bookstore.dto.book.BookDto;
+import liubomyr.stepanenko.bookstore.dto.book.CreateBookRequestDto;
 import liubomyr.stepanenko.bookstore.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

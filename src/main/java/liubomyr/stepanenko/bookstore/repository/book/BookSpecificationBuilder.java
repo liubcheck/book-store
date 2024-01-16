@@ -1,7 +1,7 @@
 package liubomyr.stepanenko.bookstore.repository.book;
 
 import java.math.BigDecimal;
-import liubomyr.stepanenko.bookstore.dto.BookSearchParametersDto;
+import liubomyr.stepanenko.bookstore.dto.book.BookSearchParametersDto;
 import liubomyr.stepanenko.bookstore.model.Book;
 import liubomyr.stepanenko.bookstore.repository.SpecificationBuilder;
 import liubomyr.stepanenko.bookstore.repository.SpecificationProviderManager;
