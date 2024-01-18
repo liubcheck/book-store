@@ -3,6 +3,7 @@ package liubomyr.stepanenko.bookstore.validation.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
+import java.util.Objects;
 import liubomyr.stepanenko.bookstore.exception.InvalidFieldValidationException;
 import liubomyr.stepanenko.bookstore.validation.FieldMatch;
 
@@ -27,8 +28,7 @@ public class FieldMatchValidator implements ConstraintValidator<FieldMatch, Obje
             secondField.setAccessible(true);
             Object secondObj = secondField.get(value);
 
-            return firstObj == null && secondObj == null
-                    || firstObj != null && firstObj.equals(secondObj);
+            return Objects.equals(firstObj, secondObj);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new InvalidFieldValidationException("Invalid field validation", e);
         }
