@@ -2,9 +2,9 @@ package liubomyr.stepanenko.bookstore.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-import liubomyr.stepanenko.bookstore.dto.BookDto;
-import liubomyr.stepanenko.bookstore.dto.BookSearchParametersDto;
-import liubomyr.stepanenko.bookstore.dto.CreateBookRequestDto;
+import liubomyr.stepanenko.bookstore.dto.book.BookDto;
+import liubomyr.stepanenko.bookstore.dto.book.BookSearchParametersDto;
+import liubomyr.stepanenko.bookstore.dto.book.CreateBookRequestDto;
 import liubomyr.stepanenko.bookstore.exception.EntityNotFoundException;
 import liubomyr.stepanenko.bookstore.mapper.BookMapper;
 import liubomyr.stepanenko.bookstore.model.Book;

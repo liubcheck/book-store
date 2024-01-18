@@ -6,13 +6,15 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import liubomyr.stepanenko.bookstore.validation.validator.IsbnValidator;
+import liubomyr.stepanenko.bookstore.validation.validator.FieldMatchValidator;
 
-@Constraint(validatedBy = IsbnValidator.class)
-@Target(ElementType.FIELD)
+@Constraint(validatedBy = FieldMatchValidator.class)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Isbn {
-    String message() default "must be in the ***-********** format, where * is a number";
+public @interface FieldMatch {
+    String message() default "fields don't match";
+    String first();
+    String second();
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
