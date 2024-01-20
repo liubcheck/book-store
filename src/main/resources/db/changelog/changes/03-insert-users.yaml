@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users
+      author: liubcheck
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: {name: "email", value: "john.doe@example.com"}
+              - column: {name: "password", value: "$2a$10$dfUKp4Ig6VpNROjEeQd4ae22UW30KvsJ9ooMOLpOcMKuzaoUapxUC"}
+              - column: {name: "first_name", value: "John"}
+              - column: {name: "last_name", value: "Doe"}
+              - column: {name: "shipping_address", value: "123 Main St, City, Country"}
+              - column: {name: "is_deleted", valueBoolean: false}
+        - insert:
+            tableName: users
+            columns:
+              - column: {name: "email", value: "alice.doe@example.com"}
+              - column: {name: "password", value: "$2a$10$wwK7p0O8LDdp17Ftm4yc.uTRJXuiisXC5RjSIqNNIfzPFuNIewXZu"}
+              - column: {name: "first_name", value: "Alice"}
+              - column: {name: "last_name", value: "Doe"}
+              - column: {name: "shipping_address", value: "123 Main St, City, Country"}
+              - column: {name: "is_deleted", valueBoolean: false}
