@@ -1,6 +1,5 @@
 package liubomyr.stepanenko.bookstore.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -12,9 +11,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@RequiredArgsConstructor
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
@@ -28,7 +30,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/api/auth/*", "/swagger-ui/**")
+                                .requestMatchers("/api/auth/*", "/error", "/swagger-ui/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
