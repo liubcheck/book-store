@@ -10,6 +10,7 @@ import liubomyr.stepanenko.bookstore.dto.book.CreateBookRequestDto;
 import liubomyr.stepanenko.bookstore.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Adds a new book to the book store",
             description = "Saves a new book to the book database")
     public BookDto createBook(@RequestBody @Valid CreateBookRequestDto bookDto) {
@@ -34,6 +36,7 @@ public class BookController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Gets all books from the book store",
             description = "Gets all available books using pagination and sorting if necessary")
     public List<BookDto> getAll(Pageable pageable) {
@@ -41,6 +44,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Searches books by different params",
             description = "Searches books by their title, author or price")
     public List<BookDto> searchBooks(BookSearchParametersDto searchParameters) {
@@ -48,6 +52,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Gets any book by its ID",
             description = "Gets any available book by its ID")
     public BookDto getBookById(@PathVariable Long id) {
@@ -55,6 +60,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Updates information of the chosen book",
             description = "Updates chosen book values if it is present in the book store")
     public BookDto updateBook(@PathVariable Long id,
@@ -63,6 +69,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Removes any chosen book from the book store",
             description = "Removes any available chosen book from the book database")
     public void deleteBook(@PathVariable Long id) {

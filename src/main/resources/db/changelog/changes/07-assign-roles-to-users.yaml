@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: assign-roles-to-users
+      author: liubcheck
+      changes:
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: "user_id"
+                  valueComputed: "(SELECT id FROM users WHERE email = 'john.doe@example.com')"
+              - column:
+                  name: "roles_id"
+                  valueComputed: "(SELECT id FROM roles WHERE name = 'ADMIN')"
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: "user_id"
+                  valueComputed: "(SELECT id FROM users WHERE email = 'alice.doe@example.com')"
+              - column:
+                  name: "roles_id"
+                  valueComputed: "(SELECT id FROM roles WHERE name = 'USER')"
