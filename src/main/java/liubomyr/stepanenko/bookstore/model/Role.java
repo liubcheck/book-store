@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import liubomyr.stepanenko.bookstore.model.enums.RoleName;
+import liubomyr.stepanenko.bookstore.model.type.RoleName;
 import lombok.Data;
 
 @Entity
