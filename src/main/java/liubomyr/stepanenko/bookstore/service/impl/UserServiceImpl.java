@@ -1,18 +1,18 @@
 package liubomyr.stepanenko.bookstore.service.impl;
 
-import liubomyr.stepanenko.bookstore.dto.user.UserRegistrationRequestDto;
 import liubomyr.stepanenko.bookstore.dto.user.UserResponseDto;
+import liubomyr.stepanenko.bookstore.dto.user.request.UserRegistrationRequestDto;
 import liubomyr.stepanenko.bookstore.exception.RegistrationException;
 import liubomyr.stepanenko.bookstore.mapper.UserMapper;
 import liubomyr.stepanenko.bookstore.model.User;
 import liubomyr.stepanenko.bookstore.repository.user.UserRepository;
-import liubomyr.stepanenko.bookstore.service.AuthenticationService;
+import liubomyr.stepanenko.bookstore.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
