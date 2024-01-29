@@ -1,4 +1,4 @@
-package liubomyr.stepanenko.bookstore.dto.user;
+package liubomyr.stepanenko.bookstore.dto.user.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

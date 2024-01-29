@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-initial-books-data
+      author: liubcheck
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: "title", value: "The Little Prince" }
+              - column: { name: "author", value: "Antoine de Saint-Exupéry" }
+              - column: { name: "isbn", value: "978-1122334421" }
+              - column: { name: "price", valueNumeric: 15 }
+              - column: { name: "description", value: "The story follows a young prince who visits various planets, including Earth, and addresses themes of loneliness, friendship, love, and loss." }
+              - column: { name: "cover_image", value: "http://example.com/the_little_prince.jpg" }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: "title", value: "Hamlet" }
+              - column: { name: "author", value: "William Shakespear" }
+              - column: { name: "isbn", value: "978-1122334422" }
+              - column: { name: "price", valueNumeric: 22 }
+              - column: { name: "description", value: "Set in Denmark, the play depicts Prince Hamlet and his attempts to exact revenge against his uncle, Claudius, who has murdered Hamlet's father in order to seize his throne and marry Hamlet's mother." }
+              - column: { name: "cover_image", value: "http://example.com/hamlet.jpg" }
+
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: "title", value: "BOOM!" }
+              - column: { name: "author", value: "Ryan Gosling" }
+              - column: { name: "isbn", value: "978-1122334423" }
+              - column: { name: "price", valueNumeric: 30 }
+              - column: { name: "description", value: "The unpublished memoirs of Canadian superstar Ryan Gosling." }
+              - column: { name: "cover_image", value: "http://example.com/boom.jpg" }
