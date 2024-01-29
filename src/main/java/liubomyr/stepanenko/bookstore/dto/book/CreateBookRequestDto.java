@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Set;
 import liubomyr.stepanenko.bookstore.validation.Isbn;
 import lombok.Data;
 
@@ -20,5 +21,6 @@ public class CreateBookRequestDto {
     private BigDecimal price;
     private String description;
     private String coverImage;
+    private Set<Long> categoryIds;
 }
 

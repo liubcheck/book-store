@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-categories
+      author: liubcheck
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Children"
+              - column:
+                  name: description
+                  value: "Literature for children"
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Fantasy"
+              - column:
+                  name: description
+                  value: "Fantasy books"
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Drama"
+              - column:
+                  name: description
+                  value: "Drama books"
+        - insert:
+            tableName: categories
+            columns:
+              - column:
+                  name: name
+                  value: "Comedy"
+              - column:
+                  name: description
+                  value: "Fun books"
