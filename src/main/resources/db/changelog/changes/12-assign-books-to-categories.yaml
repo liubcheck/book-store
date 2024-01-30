@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: assign-books-to-categories
+      author: liubcheck
+      changes:
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: "book_id"
+                  valueComputed: "(SELECT id FROM books WHERE isbn = '978-1122334421')"
+              - column:
+                  name: "category_id"
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Children')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: "book_id"
+                  valueComputed: "(SELECT id FROM books WHERE isbn = '978-1122334421')"
+              - column:
+                  name: "category_id"
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Fantasy')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: "book_id"
+                  valueComputed: "(SELECT id FROM books WHERE isbn = '978-1122334422')"
+              - column:
+                  name: "category_id"
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Drama')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: "book_id"
+                  valueComputed: "(SELECT id FROM books WHERE isbn = '978-1122334423')"
+              - column:
+                  name: "category_id"
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Drama')"
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: "book_id"
+                  valueComputed: "(SELECT id FROM books WHERE isbn = '978-1122334423')"
+              - column:
+                  name: "category_id"
+                  valueComputed: "(SELECT id FROM categories WHERE name = 'Comedy')"

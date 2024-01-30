@@ -2,6 +2,7 @@ package liubomyr.stepanenko.bookstore.service;
 
 import java.util.List;
 import liubomyr.stepanenko.bookstore.dto.book.BookDto;
+import liubomyr.stepanenko.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import liubomyr.stepanenko.bookstore.dto.book.BookSearchParametersDto;
 import liubomyr.stepanenko.bookstore.dto.book.CreateBookRequestDto;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,8 @@ public interface BookService {
     BookDto findById(Long id);
 
     List<BookDto> findAll(Pageable pageable);
+
+    List<BookDtoWithoutCategoryIds> findAllByCategoryId(Long categoryId);
 
     List<BookDto> search(BookSearchParametersDto searchParametersDto);
 

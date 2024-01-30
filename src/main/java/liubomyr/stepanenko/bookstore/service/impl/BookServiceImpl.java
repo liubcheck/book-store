@@ -3,6 +3,7 @@ package liubomyr.stepanenko.bookstore.service.impl;
 import java.util.List;
 import java.util.Optional;
 import liubomyr.stepanenko.bookstore.dto.book.BookDto;
+import liubomyr.stepanenko.bookstore.dto.book.BookDtoWithoutCategoryIds;
 import liubomyr.stepanenko.bookstore.dto.book.BookSearchParametersDto;
 import liubomyr.stepanenko.bookstore.dto.book.CreateBookRequestDto;
 import liubomyr.stepanenko.bookstore.exception.EntityNotFoundException;
@@ -42,6 +43,13 @@ public class BookServiceImpl implements BookService {
     public List<BookDto> findAll(Pageable pageable) {
         return bookRepository.findAll(pageable).stream()
                 .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> findAllByCategoryId(Long categoryId) {
+        return bookRepository.findAllByCategoryId(categoryId).stream()
+                .map(bookMapper::toDtoWithoutCategories)
                 .toList();
     }
 
