@@ -45,4 +45,11 @@ public class Book {
     private Set<Category> categories = new HashSet<>();
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    public Book() {
+    }
+
+    public Book(Long id) {
+        this.id = id;
+    }
 }
