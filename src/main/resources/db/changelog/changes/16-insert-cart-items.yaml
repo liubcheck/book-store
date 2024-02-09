@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-initial-cart-items
+      author: liubcheck
+      changes:
+        - insert:
+            tableName: cart_items
+            columns:
+              - column:
+                  name: "shopping_cart_id"
+                  valueComputed: "(SELECT id FROM shopping_carts 
+                  WHERE user_id = (SELECT id FROM users WHERE email = 'alice.doe@example.com'))"
+              - column:
+                  name: "book_id"
+                  valueComputed: "(SELECT id FROM books WHERE isbn = '978-1122334422')"
+              - column:
+                  name: "quantity"
+                  valueNumeric: 2
