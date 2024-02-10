@@ -1,5 +1,6 @@
 package liubomyr.stepanenko.bookstore.dto.cartitem;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -7,6 +8,6 @@ import lombok.Data;
 public class CartItemRequestDto {
     @NotBlank
     private Long bookId;
-    @NotBlank
+    @Min(1)
     private Integer quantity;
 }

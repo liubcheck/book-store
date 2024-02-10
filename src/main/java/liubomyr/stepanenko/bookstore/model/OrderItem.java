@@ -1,40 +1,41 @@
 package liubomyr.stepanenko.bookstore.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "shopping_carts")
-@SQLDelete(sql = "UPDATE shopping_carts SET is_deleted = true WHERE id = ?")
+@Table(name = "order_items")
+@SQLDelete(sql = "UPDATE order_items SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
 @Data
-public class ShoppingCart {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-            orphanRemoval = true)
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<CartItem> cartItems = new LinkedHashSet<>();
+    private Order order;
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+    @Column(nullable = false)
+    private Integer quantity;
+    @Column(nullable = false)
+    private BigDecimal price;
     @Column(nullable = false)
     private boolean isDeleted = false;
 }
