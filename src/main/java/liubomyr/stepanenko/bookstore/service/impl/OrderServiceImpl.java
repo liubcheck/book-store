@@ -14,7 +14,6 @@ import liubomyr.stepanenko.bookstore.dto.order.OrderStatusRequestDto;
 import liubomyr.stepanenko.bookstore.dto.orderitem.OrderItemDto;
 import liubomyr.stepanenko.bookstore.exception.EmptyShoppingCartException;
 import liubomyr.stepanenko.bookstore.exception.InvalidStatusException;
-import liubomyr.stepanenko.bookstore.exception.ShippingAddressException;
 import liubomyr.stepanenko.bookstore.mapper.OrderItemMapper;
 import liubomyr.stepanenko.bookstore.mapper.OrderMapper;
 import liubomyr.stepanenko.bookstore.model.CartItem;
@@ -42,14 +41,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderDto makeOrder(User user, OrderRequstDto orderRequstDto) {
-        String shippingAddress = orderRequstDto.getShippingAddress().isBlank()
-                ? user.getShippingAddress()
-                : orderRequstDto.getShippingAddress();
-        if (shippingAddress == null || shippingAddress.isBlank()) {
-            throw new ShippingAddressException("No shipping address has been provided");
-        }
         if (user.getShippingAddress() == null || user.getShippingAddress().isBlank()) {
-            user.setShippingAddress(shippingAddress);
+            user.setShippingAddress(orderRequstDto.getShippingAddress());
             userRepository.save(user);
         }
 
@@ -62,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         order.setUser(user);
         order.setStatus(OrderStatus.COMPLETED);
         order.setOrderDate(LocalDateTime.now());
-        order.setShippingAddress(shippingAddress);
+        order.setShippingAddress(orderRequstDto.getShippingAddress());
 
         Set<OrderItem> orderItems = orderItemsFromCartItems(shoppingCart.getCartItems(), order);
         order.setOrderItems(orderItems);

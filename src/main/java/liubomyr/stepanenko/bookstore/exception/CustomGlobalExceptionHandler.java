@@ -42,11 +42,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(ShippingAddressException.class)
-    protected ResponseEntity<Object> handleShippingAddressException(ShippingAddressException ex) {
-        return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
-    }
-
     @ExceptionHandler(EmptyShoppingCartException.class)
     protected ResponseEntity<Object> handleShippingAddressException(EmptyShoppingCartException ex) {
         return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
