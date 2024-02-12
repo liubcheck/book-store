@@ -34,11 +34,22 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(RegistrationException.class)
     protected ResponseEntity<Object> handleRegistrationException(RegistrationException ex) {
-        Map<String, Object> body = new LinkedHashMap<>();
-        body.put("timestamp", LocalDateTime.now());
-        body.put("status", HttpStatus.CONFLICT);
-        body.put("message", ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    protected ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException ex) {
+        return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmptyShoppingCartException.class)
+    protected ResponseEntity<Object> handleShippingAddressException(EmptyShoppingCartException ex) {
+        return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(InvalidStatusException.class)
+    protected ResponseEntity<Object> handleInvalidStatusException(InvalidStatusException ex) {
+        return new ResponseEntity<>(getConflictResponseBody(ex), HttpStatus.CONFLICT);
     }
 
     private String getErrorMessage(ObjectError e) {
@@ -48,5 +59,13 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
             return String.format("%s %s", field, message);
         }
         return e.getDefaultMessage();
+    }
+
+    private Map<String, Object> getConflictResponseBody(Exception ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.CONFLICT);
+        body.put("message", ex.getMessage());
+        return body;
     }
 }
