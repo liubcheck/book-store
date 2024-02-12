@@ -10,14 +10,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import liubomyr.stepanenko.bookstore.model.type.Status;
+import liubomyr.stepanenko.bookstore.model.type.OrderStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.SQLDelete;
@@ -32,20 +31,17 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @Column(nullable = false, columnDefinition = "varchar(255)")
     @Enumerated(EnumType.STRING)
-    private Status status;
-    @Column(nullable = false)
-    private BigDecimal total;
+    private OrderStatus status;
     @Column(nullable = false)
     private LocalDateTime orderDate;
     @Column(nullable = false)
     private String shippingAddress;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     private Set<OrderItem> orderItems = new LinkedHashSet<>();
     @Column(nullable = false)

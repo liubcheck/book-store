@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o JOIN FETCH o.orderItems WHERE o.user.id = :userId")
-    List<Order> findAllByUser_IdWithItems(Long userId);
+    List<Order> findAllByUserIdWithItems(Long userId);
 }

@@ -22,7 +22,7 @@ import liubomyr.stepanenko.bookstore.model.Order;
 import liubomyr.stepanenko.bookstore.model.OrderItem;
 import liubomyr.stepanenko.bookstore.model.ShoppingCart;
 import liubomyr.stepanenko.bookstore.model.User;
-import liubomyr.stepanenko.bookstore.model.type.Status;
+import liubomyr.stepanenko.bookstore.model.type.OrderStatus;
 import liubomyr.stepanenko.bookstore.repository.order.OrderRepository;
 import liubomyr.stepanenko.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import liubomyr.stepanenko.bookstore.repository.user.UserRepository;
@@ -60,8 +60,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = new Order();
         order.setUser(user);
-        order.setStatus(Status.COMPLETED);
-        order.setTotal(getTotal(shoppingCart.getCartItems()));
+        order.setStatus(OrderStatus.COMPLETED);
         order.setOrderDate(LocalDateTime.now());
         order.setShippingAddress(shippingAddress);
 
@@ -78,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> getAllOrders(Long userId) {
-        return orderRepository.findAllByUser_IdWithItems(userId).stream()
+        return orderRepository.findAllByUserIdWithItems(userId).stream()
                 .map(orderMapper::toDto)
                 .toList();
     }
@@ -87,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDto updateStatus(Long orderId, OrderStatusRequestDto statusRequestDto) {
         try {
-            Status orderStatus = Status.valueOf(statusRequestDto.getStatus());
+            OrderStatus orderStatus = OrderStatus.valueOf(statusRequestDto.getStatus());
             Order orderForUpdate = orderRepository.findById(orderId).orElseThrow(
                     () -> new EntityNotFoundException("Couldn't find an order")
             );

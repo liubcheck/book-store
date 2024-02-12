@@ -31,8 +31,7 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
-            orphanRemoval = true)
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @EqualsAndHashCode.Exclude
     private Set<CartItem> cartItems = new LinkedHashSet<>();
     @Column(nullable = false)
