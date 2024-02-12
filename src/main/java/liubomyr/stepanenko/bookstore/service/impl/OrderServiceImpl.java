@@ -2,7 +2,6 @@ package liubomyr.stepanenko.bookstore.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,9 +45,9 @@ public class OrderServiceImpl implements OrderService {
             userRepository.save(user);
         }
 
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_IdWithItems(user.getId())
-                .orElseThrow(() ->
-                        new EntityNotFoundException("Couldn't find a shopping cart")
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUserIdWithItems(user.getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Couldn't find a shopping cart for user: " + user.getId())
         );
 
         Order order = new Order();
@@ -80,9 +79,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto updateStatus(Long orderId, OrderStatusRequestDto statusRequestDto) {
         try {
             OrderStatus orderStatus = OrderStatus.valueOf(statusRequestDto.getStatus());
-            Order orderForUpdate = orderRepository.findById(orderId).orElseThrow(
-                    () -> new EntityNotFoundException("Couldn't find an order")
-            );
+            Order orderForUpdate = getOrder(orderId);
             orderForUpdate.setStatus(orderStatus);
             return orderMapper.toDto(orderForUpdate);
         } catch (IllegalArgumentException ex) {
@@ -92,9 +89,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderItemDto> getAllItemsByOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(
-                () -> new EntityNotFoundException("Couldn't find an order by id = " + orderId)
-        );
+        Order order = getOrder(orderId);
         return new ArrayList<>(order.getOrderItems().stream()
                 .map(orderItemMapper::toDto)
                 .toList());
@@ -102,9 +97,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderItemDto getOrderItemById(Long orderId, Long itemId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(
-                () -> new EntityNotFoundException("Couldn't find an order by id = " + orderId)
-        );
+        Order order = getOrder(orderId);
         for (OrderItem orderItem : order.getOrderItems()) {
             if (orderItem.getId().equals(itemId)) {
                 return orderItemMapper.toDto(orderItem);
@@ -112,13 +105,6 @@ public class OrderServiceImpl implements OrderService {
         }
         throw new EntityNotFoundException("Couldn't find an item by id = " + itemId
                 + " within an order with id = " + orderId);
-    }
-
-    private BigDecimal getTotal(Set<CartItem> cartItems) {
-        return cartItems.stream()
-                .map(cartItem -> cartItem.getBook().getPrice()
-                        .multiply(BigDecimal.valueOf(cartItem.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private Set<OrderItem> orderItemsFromCartItems(Set<CartItem> cartItems, Order order) {
@@ -129,5 +115,11 @@ public class OrderServiceImpl implements OrderService {
                 .map(orderItemMapper::toOrderItemFromCartItem)
                 .peek(orderItem -> orderItem.setOrder(order))
                 .collect(Collectors.toSet());
+    }
+
+    private Order getOrder(Long orderId) {
+        return orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException("Couldn't find an order by id = " + orderId)
+        );
     }
 }

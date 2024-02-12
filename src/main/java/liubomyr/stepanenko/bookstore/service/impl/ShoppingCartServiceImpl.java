@@ -8,7 +8,6 @@ import liubomyr.stepanenko.bookstore.mapper.CartItemMapper;
 import liubomyr.stepanenko.bookstore.mapper.ShoppingCartMapper;
 import liubomyr.stepanenko.bookstore.model.CartItem;
 import liubomyr.stepanenko.bookstore.model.ShoppingCart;
-import liubomyr.stepanenko.bookstore.model.User;
 import liubomyr.stepanenko.bookstore.repository.shoppingcart.ShoppingCartRepository;
 import liubomyr.stepanenko.bookstore.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +22,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCartDto addItem(User user, CartItemRequestDto cartItemRequestDto) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_IdWithItems(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Couldn't find a shopping cart"));
+    public ShoppingCartDto addItem(Long userId, CartItemRequestDto cartItemRequestDto) {
+        ShoppingCart shoppingCart = getShoppingCart(userId);
         CartItem cartItem = cartItemMapper.toModel(cartItemRequestDto);
         cartItem.setShoppingCart(shoppingCart);
         shoppingCart.getCartItems().add(cartItem);
@@ -35,19 +33,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public ShoppingCartDto get(User user) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_IdWithItems(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Couldn't find a shopping cart")
-        );
-        return shoppingCartMapper.toDto(shoppingCart);
+    public ShoppingCartDto get(Long userId) {
+        return shoppingCartMapper.toDto(getShoppingCart(userId));
     }
 
     @Override
     @Transactional
-    public ShoppingCartDto updateItemQuantity(User user, Long cartItemId, Integer quantity) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_IdWithItems(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Couldn't find a shopping cart")
-        );
+    public ShoppingCartDto updateItemQuantity(Long userId, Long cartItemId, Integer quantity) {
+        ShoppingCart shoppingCart = getShoppingCart(userId);
         for (CartItem cartItem : shoppingCart.getCartItems()) {
             if (cartItem.getId().equals(cartItemId)) {
                 cartItem.setQuantity(quantity);
@@ -60,11 +53,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public void deleteItem(User user, Long cartItemId) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUser_IdWithItems(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Couldn't find a shopping cart")
-        );
+    public void deleteItem(Long userId, Long cartItemId) {
+        ShoppingCart shoppingCart = getShoppingCart(userId);
         shoppingCart.getCartItems().removeIf(cartItem ->
                 cartItem.getId().equals(cartItemId));
+    }
+
+    private ShoppingCart getShoppingCart(Long userId) {
+        return shoppingCartRepository.findByUserIdWithItems(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Couldn't find a shopping cart "
+                        + "for user: " + userId));
     }
 }

@@ -36,7 +36,7 @@ public class ShoppingCartController {
     public ShoppingCartDto addItem(Authentication authentication,
                                    @RequestBody CartItemRequestDto cartItemRequestDto) {
         User user = (User) authentication.getPrincipal();
-        return shoppingCartService.addItem(user, cartItemRequestDto);
+        return shoppingCartService.addItem(user.getId(), cartItemRequestDto);
     }
 
     @GetMapping
@@ -44,7 +44,7 @@ public class ShoppingCartController {
             description = "Gets all available items assigned to the user's shopping cart")
     public ShoppingCartDto getShoppingCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return shoppingCartService.get(user);
+        return shoppingCartService.get(user.getId());
     }
 
     @PutMapping("/{cartItemId}")
@@ -55,7 +55,7 @@ public class ShoppingCartController {
                                                         @PathVariable Long cartItemId,
                                                         @RequestParam @Positive Integer quantity) {
         User user = (User) authentication.getPrincipal();
-        return shoppingCartService.updateItemQuantity(user, cartItemId, quantity);
+        return shoppingCartService.updateItemQuantity(user.getId(), cartItemId, quantity);
     }
 
     @DeleteMapping("/{cartItemId}")
@@ -64,7 +64,7 @@ public class ShoppingCartController {
     public String removeCartItemFromShoppingCart(Authentication authentication,
                                                         @PathVariable Long cartItemId) {
         User user = (User) authentication.getPrincipal();
-        shoppingCartService.deleteItem(user, cartItemId);
+        shoppingCartService.deleteItem(user.getId(), cartItemId);
         return "Cart item with id = " + cartItemId + " was successfully deleted";
     }
 }
